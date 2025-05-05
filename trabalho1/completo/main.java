@@ -4,12 +4,12 @@ import java.util.*;
 public class Main {
     private static class Automato {
         private final int[][] matrizTransicao;
-        private final int estadoFinal;
+        private final Set<Integer> estadosFinais;  // Mudado de int para Set<Integer>
         private final String alfabeto;
 
-        public Automato(int[][] matrizTransicao, int estadoFinal, String alfabeto) {
+        public Automato(int[][] matrizTransicao, Set<Integer> estadosFinais, String alfabeto) {
             this.matrizTransicao = matrizTransicao;
-            this.estadoFinal = estadoFinal;
+            this.estadosFinais = estadosFinais;
             this.alfabeto = alfabeto;
         }
 
@@ -26,7 +26,7 @@ public class Main {
                 estadoAtual = matrizTransicao[estadoAtual][indiceSimbolo];
             }
             
-            return estadoAtual == estadoFinal;
+            return estadosFinais.contains(estadoAtual);  // Mudado para usar contains()
         }
     }
 
@@ -36,7 +36,12 @@ public class Main {
             
             String alfabeto = leitor.readLine().trim();
             
-            int estadoFinal = Integer.parseInt(leitor.readLine().trim());
+            // Lendo múltiplos estados finais separados por vírgula
+            Set<Integer> estadosFinais = new HashSet<>();
+            String[] estadosFinaisStr = leitor.readLine().trim().split(",");
+            for (String estadoFinalStr : estadosFinaisStr) {
+                estadosFinais.add(Integer.parseInt(estadoFinalStr.trim()));
+            }
             
             List<int[]> linhas = new ArrayList<>();
             String linha;
@@ -57,7 +62,7 @@ public class Main {
                 matrizTransicao[i][1] = linhas.get(i)[1];
             }
             
-            return new Automato(matrizTransicao, estadoFinal, alfabeto);
+            return new Automato(matrizTransicao, estadosFinais, alfabeto);
         }
     }
 
