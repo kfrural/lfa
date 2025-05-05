@@ -1,0 +1,105 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    private static class Automato {
+        private final int[][] matrizTransicao;
+        private final Set<Integer> estadosFinais;
+        private final String alfabeto;
+
+        public Automato(int[][] matrizTransicao, Set<Integer> estadosFinais, String alfabeto) {
+            this.matrizTransicao = matrizTransicao;
+            this.estadosFinais = estadosFinais;
+            this.alfabeto = alfabeto;
+        }
+
+        public boolean reconhecer(String palavra) {
+            int estadoAtual = 0;
+            System.out.printf("\nProcessando palavra: %s%n", palavra);
+            System.out.printf("Estado inicial: q%d%n", estadoAtual);
+
+            for (int i = 0; i < palavra.length(); i++) {
+                char c = palavra.charAt(i);
+                int indiceSimbolo = alfabeto.indexOf(c);
+                
+                if (indiceSimbolo == -1) {
+                    System.out.printf("Erro na posição %d: símbolo '%c' não está no alfabeto%n", i, c);
+                    continue;
+                }
+                
+                if (estadoAtual >= matrizTransicao.length || 
+                    indiceSimbolo >= matrizTransicao[0].length) {
+                    return false;
+                }
+                
+                int proximoEstado = matrizTransicao[estadoAtual][indiceSimbolo];
+                System.out.printf("Lendo '%c': mudando de q%d para q%d%n", 
+                                c, estadoAtual, proximoEstado);
+                estadoAtual = proximoEstado;
+            }
+
+            System.out.printf("Estado final: q%d%n", estadoAtual);
+            boolean aceita = estadosFinais.contains(estadoAtual);
+            System.out.printf("Palavra %saceita%s%n", 
+                            aceita ? "" : "não ", 
+                            aceita ? "(terminou em estado final)" : "(não terminou em estado final)");
+            
+            return aceita;
+        }
+    }
+
+    private static Automato lerAutomatoDeArquivo(String caminhoArquivo) throws IOException {
+        try (BufferedReader leitor = new BufferedReader(new FileReader(caminhoArquivo))) {
+            int numEstados = Integer.parseInt(leitor.readLine().trim());
+            
+            String alfabeto = leitor.readLine().trim();
+            
+            Set<Integer> estadosFinais = new HashSet<>();
+            String[] estadosFinaisStr = leitor.readLine().trim().split(",");
+            for (String estadoFinalStr : estadosFinaisStr) {
+                estadosFinais.add(Integer.parseInt(estadoFinalStr.trim()));
+            }
+            
+            int[][] matrizTransicao = new int[numEstados][alfabeto.length()];
+            
+            String linha;
+            int estadoAtual = 0;
+            while ((linha = leitor.readLine()) != null && estadoAtual < numEstados) {
+                String[] transicoes = linha.trim().split(";");
+                
+                for (int i = 0; i < alfabeto.length(); i++) {
+                    if (i < transicoes.length) {
+                        matrizTransicao[estadoAtual][i] = Integer.parseInt(transicoes[i]);
+                    }
+                }
+                
+                estadoAtual++;
+            }
+            
+            return new Automato(matrizTransicao, estadosFinais, alfabeto);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        try {
+            String caminho = "automato.csv";
+            Automato automato = lerAutomatoDeArquivo(caminho);
+            
+            System.out.println("\nDigite palavras para testar (ou 'sair' para encerrar):");
+            while (true) {
+                String palavra = scanner.nextLine();
+                if (palavra.equalsIgnoreCase("sair")) {
+                    break;
+                }
+                boolean resultado = automato.reconhecer(palavra);
+                System.out.println("------------------------");
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
