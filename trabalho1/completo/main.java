@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     private static class Automato {
         private final int[][] matrizTransicao;
-        private final Set<Integer> estadosFinais;  // Mudado de int para Set<Integer>
+        private final Set<Integer> estadosFinais;
         private final String alfabeto;
 
         public Automato(int[][] matrizTransicao, Set<Integer> estadosFinais, String alfabeto) {
@@ -26,7 +26,7 @@ public class Main {
                 estadoAtual = matrizTransicao[estadoAtual][indiceSimbolo];
             }
             
-            return estadosFinais.contains(estadoAtual);  // Mudado para usar contains()
+            return estadosFinais.contains(estadoAtual);
         }
     }
 
@@ -36,7 +36,6 @@ public class Main {
             
             String alfabeto = leitor.readLine().trim();
             
-            // Lendo múltiplos estados finais separados por vírgula
             Set<Integer> estadosFinais = new HashSet<>();
             String[] estadosFinaisStr = leitor.readLine().trim().split(",");
             for (String estadoFinalStr : estadosFinaisStr) {
