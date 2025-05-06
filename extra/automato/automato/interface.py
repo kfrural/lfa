@@ -1,4 +1,3 @@
-# automato/interface.py
 import tkinter as tk
 from tkinter import ttk
 import matplotlib.pyplot as plt
@@ -13,14 +12,12 @@ class InterfaceAutomato:
         self.root.title("Visualizador de Autômatos Finitos")
         self.root.geometry("800x600")
         
-        # Criar frames
         self.frame_entrada = ttk.Frame(root)
         self.frame_entrada.pack(fill=tk.X, padx=10, pady=5)
         
         self.frame_visualizacao = ttk.Frame(root)
         self.frame_visualizacao.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
         
-        # Criar campos de entrada
         self.label_arquivo = ttk.Label(self.frame_entrada, text="Arquivo CSV:")
         self.label_arquivo.pack(side=tk.LEFT)
         
@@ -30,12 +27,10 @@ class InterfaceAutomato:
         self.botao_carregar = ttk.Button(self.frame_entrada, text="Carregar", command=self.carregar_automato)
         self.botao_carregar.pack(side=tk.LEFT)
         
-        # Criar área de visualização
         self.fig, self.ax = plt.subplots(figsize=(8, 6))
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.frame_visualizacao)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
         
-        # Criar campo para teste de palavras
         self.frame_teste = ttk.Frame(root)
         self.frame_teste.pack(fill=tk.X, padx=10, pady=5)
         
