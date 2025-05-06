@@ -1,4 +1,3 @@
-# scripts/runner.py
 from automato.core import Automato
 from automato.utils import ler_automato_de_arquivo
 from automato.visualizador import desenhar_automato
