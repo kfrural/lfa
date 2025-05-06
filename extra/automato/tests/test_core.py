@@ -1,4 +1,3 @@
-# tests/test_core.py
 import unittest
 from automato.core import Automato
 from .context import automato
