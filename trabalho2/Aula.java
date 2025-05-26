@@ -9,24 +9,24 @@ public class Aula {
     public static void main(String[] args) {
         ExpressaoRegular ER = new ExpressaoRegular();
 
-        System.out.println("\nTestando assinaturas de função:");
+        System.out.println("\nTestando  ees trem de assinatura\n");
     ER.confere(ER.ASSINATURA_FUNCAO, "void funcao1(int a, float b);");
     ER.confere(ER.ASSINATURA_FUNCAO, "String funcao2();");
     ER.confere(ER.ASSINATURA_FUNCAO, "void funcao();");
 
     // Teste parâmetros de função
-    System.out.println("\nTestando parâmetros de função:");
+    System.out.println("\nTestando esse trem de parmetros\n:");
     ER.confere(ER.PARAMETROS_FUNCAO, "(int a, float b)");
     ER.confere(ER.PARAMETROS_FUNCAO, "(float media, String nome)");
     ER.confere(ER.PARAMETROS_FUNCAO, "()");
 
     // Teste condicionais
-    System.out.println("\nTestando condicionais:");
+    System.out.println("\nTestando  as condicional:");
     ER.confere(ER.CONDICIONAL_IF, "if(ano < 1990)");
     ER.confere(ER.CONDICIONAL_IF, "if(3*a != 4+t)");
 
     // Teste expressões matemáticas
-    System.out.println("\nTestando expressões matemáticas:");
+    System.out.println("\nTestando as expressao:");
     ER.confere(ER.EXPRESSAO_MATHEMATICA, "3 + media/3");
     ER.confere(ER.EXPRESSAO_MATHEMATICA, "-4 + beta * media[1].x * soma(a,b)/4 * vetor[5].idade");
 
